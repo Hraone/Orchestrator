@@ -1,10 +1,11 @@
 import os
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 from dotenv import load_dotenv
-import database
-from integrations import github_snapshot, jira_snapshot
 
 load_dotenv()
+
+import database
+from integrations import github_snapshot, jira_snapshot
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("FLASK_SECRET_KEY", "dev-only-change-me")
 database.init_db()
