@@ -2,7 +2,10 @@ import os
 import sqlite3
 from contextlib import contextmanager
 
-DATABASE_PATH = os.getenv("DATABASE_PATH", "orchestrator.db")
+# Vercel functions have a writable temporary directory, but it is ephemeral.
+# Use a persistent database service for production data.
+_DEFAULT_DATABASE_PATH = "/tmp/orchestrator.db" if os.getenv("VERCEL") else "orchestrator.db"
+DATABASE_PATH = os.getenv("DATABASE_PATH", _DEFAULT_DATABASE_PATH)
 
 @contextmanager
 def connection():
